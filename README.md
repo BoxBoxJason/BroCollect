@@ -24,7 +24,7 @@ Fill your game settings
 ![Illustration: FFA game](./illustrations/ffa.png "FFA collector illustration")
 
 ### Team Collection
-![Illustration: Team game](./illustrations/ffa.png "FFA collector illustration")
+![Illustration: Team game](./illustrations/team.png "FFA collector illustration")
 ## Technical Summary
 - **Python Version:** 3.10
 - **Requirements:**
