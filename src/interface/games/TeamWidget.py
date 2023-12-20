@@ -52,8 +52,7 @@ class TeamWidget(TemplatePageWidget):
             for player_id in sum(players_ranking):
                 if not player_id in self.database['PLAYERS']:
                     createMMRPlayer(self.database['PLAYERS'],player_id)
-                    self.__ranking_widget.updatePlayersList(self.database['PLAYERS'])
-                self.database['PLAYERS'][player_id]['GAMES'].append(game_info_dict['ID'])
+            self.__ranking_widget.updatePlayersList(self.database['PLAYERS'])
 
             with open(self.__database_path,'w',encoding='utf-8') as database_file:
                 dump(self.database,database_file)

@@ -73,9 +73,8 @@ class OneVOneWidget(TemplatePageWidget):
             for player_id in player1_id,player2_id:
                 if not player_id in self.database['PLAYERS']:
                     createELOPlayer(self.database['PLAYERS'],player_id)
-                    self.__player1_widget.updatePlayersList(self.database['PLAYERS'])
-                    self.__player2_widget.updatePlayersList(self.database['PLAYERS'])
-                self.database['PLAYERS'][player_id]['GAMES'].append(game_info_dict['ID'])
+            self.__player1_widget.updatePlayersList(self.database['PLAYERS'])
+            self.__player2_widget.updatePlayersList(self.database['PLAYERS'])
 
             with open(self.__database_path,'w',encoding='utf-8') as database_file:
                 dump(self.database,database_file)

@@ -61,8 +61,7 @@ class FreeForAllWidget(TemplatePageWidget):
             for player_id in players_ranking:
                 if not player_id in self.database['PLAYERS']:
                     createMMRPlayer(self.database['PLAYERS'],player_id)
-                    self.__ranking_widget.updatePlayersList(self.database['PLAYERS'])
-                self.database['PLAYERS'][player_id]['GAMES'].append(game_info_dict['ID'])
+            self.__ranking_widget.updatePlayersList(self.database['PLAYERS'])
 
             with open(self.__database_path,'w',encoding='utf-8') as database_file:
                 dump(self.database,database_file)
@@ -104,7 +103,7 @@ class RankingWidget(QWidget):
     def __init__(self,parent,top_label='Players'):
         super().__init__(parent)
         layout = QVBoxLayout(self)
-        self.__player_set = set()
+        self.__players_set = set()
         # Title label
         players_qlabel = QLabel(top_label,self)
         players_qlabel.setObjectName('h3')
@@ -139,9 +138,9 @@ class RankingWidget(QWidget):
 
     def __addPlayerIdToList(self):
         player_id = self.__search_bar.text().strip()
-        if player_id and not player_id in self.__player_set:
+        if player_id and not player_id in self.__players_set:
             self.__list_widget.addItem(QListWidgetItem(player_id))
-            self.__player_set.add(player_id)
+            self.__players_set.add(player_id)
 
 
     def __updateBgColor(self,text):
@@ -167,15 +166,19 @@ class RankingWidget(QWidget):
             edit_action = QAction("Edit", self)
             delete_action = QAction("Delete", self)
 
-            edit_action.triggered.connect(lambda: self.editItem(item))
-            delete_action.triggered.connect(lambda: self.__list_widget.takeItem(self.row(item)))
+            edit_action.triggered.connect(lambda: self.__editItem(item))
+            delete_action.triggered.connect(lambda: self.__deleteItem(item))
 
             menu.addAction(edit_action)
             menu.addAction(delete_action)
 
             menu.exec(self.mapToGlobal(position))
 
-    def editItem(self, item):
+
+    def __deleteItem(self,item):
+        self.__players_set.remove(item.text())
+        self.__list_widget.takeItem(self.row(item))
+    def __editItem(self, item):
         text, ok = QInputDialog.getText(self, "Edit Item", "Enter new text:", text=item.text())
         if ok:
             item.setText(text)

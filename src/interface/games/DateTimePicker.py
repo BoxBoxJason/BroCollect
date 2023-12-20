@@ -23,7 +23,7 @@ class DateTimePicker(QWidget):
 
     def getDateTime(self):
         """
-        @return (str) picked date to format yyyy-MM-dd
+        @return (str) picked date to format yyyy-MM-dd HH:mm
         """
         return self.__date_picker.date().toString('yyyy-MM-dd HH:mm')
 
